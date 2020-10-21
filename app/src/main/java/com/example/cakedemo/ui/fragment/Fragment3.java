@@ -26,10 +26,10 @@ public class Fragment3 extends Fragment {     // 2.1.新建一个类继承Fragme
     @Override
                                              //2.2. 重写OnCreateView()方法
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+        app = (AppData) getActivity().getApplication();
                                              //2.3.让fragment关联相应的布局文件
         View view = inflater.from(getActivity()).inflate(R.layout.frag3,container,false  );
-        app = (AppData) getActivity().getApplication();
+
         initVIew(view);
 
         return view;                        //2.5返回view可以控制fragment滑动可见的内容
