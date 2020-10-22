@@ -1,4 +1,4 @@
-package com.example.cakedemo;
+package com.example.cakedemo.ui.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+
+import com.example.cakedemo.R;
 import com.example.cakedemo.ui.fragment.Fragment1;
 import com.example.cakedemo.ui.fragment.Fragment2;
 import com.example.cakedemo.ui.fragment.Fragment3;
@@ -24,6 +26,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {                                               //1.继承AppCompatActivity或者Fragment来实现(fragment)页面的滑动
     private ViewPager vp;
     Button bt1,bt2,bt3,bt4;
+    private AppData app;
+
     /**
      *用与创建Activity页面的，会自动运行,所以其它页面要想运行，需要再Activity页面调用
      */
@@ -32,6 +36,7 @@ public class MainActivity extends AppCompatActivity {                           
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        app = (AppData) getApplication();
         initfragment(); //调用方法
         initClick();
     }
@@ -90,7 +95,8 @@ public class MainActivity extends AppCompatActivity {                           
                     bt2.setTextColor(Color.rgb(0,0,0));          //其他颜色为原来的颜色
                     bt1.setTextColor(Color.rgb(0,0,0));
                     bt4.setTextColor(Color.rgb(0,0,0));
-
+                    Fragment3.adapter.notifyDataSetChanged();   //刷新清单列表
+                    Fragment3.counttv.setText(app.count+"");
                 }
                 else if(vp.getCurrentItem()==3){
 
@@ -151,6 +157,7 @@ public class MainActivity extends AppCompatActivity {                           
                 bt2.setTextColor(Color.rgb(0,0,0));          //其他颜色为原来的颜色
                 bt1.setTextColor(Color.rgb(0,0,0));
                 bt4.setTextColor(Color.rgb(0,0,0));
+
             }
         });
 

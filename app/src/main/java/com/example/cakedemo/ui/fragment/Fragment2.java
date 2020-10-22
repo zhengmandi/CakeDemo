@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+
 import com.example.cakedemo.R;
 import com.example.cakedemo.ui.activity.AppData;
 
@@ -34,7 +35,7 @@ public class Fragment2 extends Fragment {                                       
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
                                                                                                     //2.3.让fragment关联相应的布局文件
         app = (AppData) getActivity().getApplication();                                                      //获得全局类
-        View view = inflater.from(getActivity()).inflate(R.layout.frag2,container,false  );
+        View view = inflater.inflate(R.layout.frag2,container,false  );
         initListView(view);
 
         return view;                                                                                //2.5返回view可以控制fragment滑动可见的内容
@@ -91,29 +92,27 @@ public class Fragment2 extends Fragment {                                       
                 "蛋糕12","蛋糕13","蛋糕14","蛋糕15"};
         String[] price2 = {"100","102","99","103","130","100","102","99","103","130","100","102","99","103","130"};
 
+        int[] image3 = {R.drawable.cake31,R.drawable.cake32,R.drawable.cake33,R.drawable.cake34,R.drawable.cake35,
+                R.drawable.cake36,R.drawable.cake37,R.drawable.cake38,R.drawable.cake39,R.drawable.cake40,
+                R.drawable.cake26,R.drawable.cake27,R.drawable.cake28,R.drawable.cake29,R.drawable.cake30};
+        String[] name3 = {"jienne 蛋糕1","蛋糕2","蛋糕3","蛋糕4","蛋糕5","蛋糕6","蛋糕7","蛋糕8","蛋糕9","蛋糕10","蛋糕11",
+                "蛋糕12","蛋糕13","蛋糕14","蛋糕15"};
+        String[] price3 = {"100","102","99","103","130","100","102","99","103","130","100","102","99","103","130"};
+
+        int[] image4 = {R.drawable.cake41,R.drawable.cake42,R.drawable.cake43,R.drawable.cake44,R.drawable.cake45,
+                R.drawable.cake46,R.drawable.cake47,R.drawable.cake1,R.drawable.cake39,R.drawable.cake40,
+                R.drawable.cake26,R.drawable.cake27,R.drawable.cake28,R.drawable.cake29,R.drawable.cake30};
+        String[] name4 = {"rose 蛋糕1","蛋糕2","蛋糕3","蛋糕4","蛋糕5","蛋糕6","蛋糕7","蛋糕8","蛋糕9","蛋糕10","蛋糕11",
+                "蛋糕12","蛋糕13","蛋糕14","蛋糕15"};
+        String[] price4 = {"100","102","99","103","130","100","102","99","103","130","100","102","99","103","130"};
+
         final ArrayList<HashMap<String,Object>> lisalist = getList(image1,name1,price1) ;
         final ArrayList<HashMap<String,Object>> jisoolist = getList(image2,name2,price2) ;
+        final ArrayList<HashMap<String,Object>> jiennelist = getList(image3,name3,price3) ;
+        final ArrayList<HashMap<String,Object>> roselist = getList(image4,name4,price4) ;
         list = lisalist;
-        SimpleAdapter adapter2 = new SimpleAdapter(getActivity(),lisalist,R.layout.item2,
-                new String[]{"image","name","price"},new int[]{R.id.image1,R.id.textView2,R.id.textView4}){
-            @Override
-            public View getView(final int position, View convertView, ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
-                //点击添加按钮  把蛋糕从2添加到3
-                Button bt = view.findViewById(R.id.button5);
-                bt.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        app.list.add(lisalist.get(position));
-                        Toast.makeText(getActivity(),"已添加",Toast.LENGTH_SHORT).show();
-                    }
-                });
-                return view;
-            }
-        };
-
         final ListView lvright = view.findViewById(R.id.listview2);
-        lvright.setAdapter(adapter2);
+        lvright.setAdapter(getAdapter(lisalist));
 
 
                                                                                              //3.实现左边列表刷新右边列表
@@ -121,13 +120,21 @@ public class Fragment2 extends Fragment {                                       
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position==0){
-                    SimpleAdapter adapter2 = new SimpleAdapter(getActivity(),lisalist,R.layout.item2,
-                            new String[]{"image","name","price"},new int[]{R.id.image1,R.id.textView2,R.id.textView4});
-                    lvright.setAdapter(adapter2);
+
+                    lvright.setAdapter(getAdapter(lisalist));
+                    list = lisalist;
                 }else if (position==1){
-                    SimpleAdapter adapter2 = new SimpleAdapter(getActivity(),jisoolist,R.layout.item2,
-                            new String[]{"image","name","price"},new int[]{R.id.image1,R.id.textView2,R.id.textView4});
-                    lvright.setAdapter(adapter2);
+
+                    lvright.setAdapter(getAdapter(jisoolist));
+                    list = jisoolist;
+                }else if (position==2){
+
+                    lvright.setAdapter(getAdapter(jiennelist));
+                    list = jiennelist;
+                }else if (position==3){
+
+                    lvright.setAdapter(getAdapter(roselist));
+                    list = roselist;
                 }
                 int n = parent.getChildCount();
                 for(int i=0;i<n;i++){
@@ -136,7 +143,7 @@ public class Fragment2 extends Fragment {                                       
                 }
                 /*选中后的颜色*/
                 view.setBackgroundColor(Color.rgb(230,255,255));
-                /*list = */
+
             }
         });
 
@@ -157,6 +164,43 @@ public class Fragment2 extends Fragment {                                       
             list.add(mapp);
         }
         return list;
+    }
+    /**
+     * 封装右边列表适配器
+     * 导入右边列表集合
+     * 返回适配器
+     * */
+
+
+    private SimpleAdapter getAdapter(final ArrayList<HashMap<String,Object>> list){
+        SimpleAdapter adapter2 = new SimpleAdapter(getActivity(),list,R.layout.item2,
+                new String[]{"image","name","price"},new int[]{R.id.image1,R.id.textView2,R.id.textView4}){
+            @Override
+            public View getView(final int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                //点击添加按钮  把蛋糕从2添加到3
+                Button bt = view.findViewById(R.id.button5);
+                bt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        HashMap<String,Object> zlist = list.get(position);                          //获得已选蛋糕
+                        if(!app.list.contains(zlist)){                                              //如果该蛋糕没有选择过
+                            zlist.put("number",1);                                                  //添加初始数据（数量）
+                            app.list.add(zlist);                                                    //添加已选蛋糕道已选清单集合
+                            //获得单价
+                            double price= Double.parseDouble((String)zlist.get("price"));
+                            app.count +=price;                                                       //总价累和
+                            Toast.makeText(getActivity(),"已添加",Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(getActivity(),"选过了",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                return view;
+            }
+        };
+        return adapter2;
     }
 
 }

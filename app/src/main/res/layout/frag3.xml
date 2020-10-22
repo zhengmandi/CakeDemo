@@ -26,10 +26,10 @@
 
         android:orientation="vertical">
 
-        <ListView
+        <activity.MyListView
             android:id="@+id/listview3"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"/>
 
         <TextView
@@ -61,22 +61,24 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="总价：" />
+            android:text="总价："
+            android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/countTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="20sp"
-            android:text="0" />
+
+            android:text="0.0"
+            android:textSize="20sp" />
+
         <TextView
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="元" />
+            android:layout_weight="1"
+            android:text="元"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/button6"
@@ -84,7 +86,7 @@
             android:layout_height="match_parent"
             android:textColor="#fff"
             android:textSize="20sp"
-            android:background="#FFC107"
+            android:background="#ACE7F2"
             android:text="结算" />
     </LinearLayout>
 

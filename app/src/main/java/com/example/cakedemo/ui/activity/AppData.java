@@ -12,6 +12,7 @@ public class AppData extends Application {
                                                                                  //用于已选蛋糕数据
     public ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String, Object>>();
 
+    public double count;
     @Override
     public void onCreate() {                  //用于初始化数据
         super.onCreate();
