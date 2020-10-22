@@ -11,7 +11,13 @@ import androidx.fragment.app.Fragment;
 
 import com.example.cakedemo.R;
 
-
+/**
+ * @author 神奇女侠
+ * @deprecate 首页界面
+ * 1、2.1.新建一个类继承Fragment
+ * 2、2.2. 重写OnCreateView()方法
+ * 3、2.3.让fragment关联相应的布局文件
+ */
 public class Fragment1 extends Fragment {     // 2.1.新建一个类继承Fragment
 
     /***
